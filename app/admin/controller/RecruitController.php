@@ -2,29 +2,34 @@
 /**
  * Created by PhpStorm.
  * User: zhangchun
- * Date: 2019/1/7
- * Time: 14:29
+ * Date: 2019/1/14
+ * Time: 11:55
  */
 
 namespace app\admin\controller;
 
-
-use app\admin\model\BannerModel;
+use app\admin\model\RecruitModel;
 use cmf\controller\AdminBaseController;
 
-class BannerController extends AdminBaseController
+class RecruitController extends AdminBaseController
 {
-    public function index()
-    {
-        $bannerModel = new BannerModel();
-        $banners   = $bannerModel->where('type','in',[1,3])->order('list_order ASC')->paginate(10);
 
-        $this->assign('banners', $banners);
-        $this->assign('page', $banners->render());
+    /**
+     * 获取所有职位
+     */
+    public function index(){
+        $param = $this->request->param();
+
+        $recruitModel = new RecruitModel();
+        $recruits = $recruitModel->paginate(10);
+
+        $recruits->appends($param);
+
+        $this->assign('recruits',$recruits->item());
+        $this->assign('page',$recruits->render());
 
         return $this->fetch();
     }
-
 
     public function add()
     {
@@ -37,15 +42,14 @@ class BannerController extends AdminBaseController
         $data      = $this->request->param();
         $data['create_time'] = time();
 
-        if($data['title'] == '') return $this->error('banner名称必须');
-        if($data['cover_img'] == '') return $this->error('缩略图必须');
-        $bannerModel = new BannerModel();
+//        if($data['position'] == '') return $this->error('banner名称必须');
+        $bannerModel = new RecruitModel();
         $result    = $bannerModel->validate(true)->allowField(true)->save($data);
         if ($result === false) {
             $this->error($bannerModel->getError());
         }
 
-        $this->success("添加成功！", url("banner/index"));
+        $this->success("添加成功！", url("recruit/index"));
     }
 
     /**
@@ -64,9 +68,9 @@ class BannerController extends AdminBaseController
     public function edit()
     {
         $id        = $this->request->param('id', 0, 'intval');
-        $bannerModel = BannerModel::get($id);
+        $recruit = RecruitModel::get($id);
 //        var_dump($bannerModel);die;
-        $this->assign('banner', $bannerModel);
+        $this->assign('recruit', $recruit);
         return $this->fetch();
     }
 
@@ -86,13 +90,15 @@ class BannerController extends AdminBaseController
     public function editPost()
     {
         $data      = $this->request->param();
-        $bannerModel = new BannerModel();
-        $result    = $bannerModel->validate(true)->allowField(true)->isUpdate(true)->save($data);
+        $recruitModel = new RecruitModel();
+        $data['requirement'] = htmlspecialchars_decode($data['requirement']);
+        $data['duty'] = htmlspecialchars_decode($data['duty']);
+        $result    = $recruitModel->validate(true)->allowField(true)->isUpdate(true)->save($data);
         if ($result === false) {
-            $this->error($bannerModel->getError());
+            $this->error($recruitModel->getError());
         }
 
-        $this->success("保存成功！", url("banner/index"));
+        $this->success("保存成功！", url("recruit/index"));
     }
 
     /**
@@ -111,58 +117,38 @@ class BannerController extends AdminBaseController
     public function delete()
     {
         $id = $this->request->param('id', 0, 'intval');
-        BannerModel::destroy($id);
+        RecruitModel::destroy($id);
 
-        $this->success("删除成功！", url("banner/index"));
+        $this->success("删除成功！", url("recruit/index"));
     }
 
     /**
-     * 友情链接排序
-     * @adminMenu(
-     *     'name'   => '友情链接排序',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '友情链接排序',
-     *     'param'  => ''
-     * )
+     * 排序
      */
     public function listOrder()
     {
-        $bannerModel = new  BannerModel();
-        parent::listOrders($bannerModel);
+        $recruitModel = new  RecruitModel();
+        parent::listOrders($recruitModel);
         $this->success("排序更新成功！");
     }
 
     /**
-     * 友情链接显示隐藏
-     * @adminMenu(
-     *     'name'   => '友情链接显示隐藏',
-     *     'parent' => 'index',
-     *     'display'=> false,
-     *     'hasView'=> false,
-     *     'order'  => 10000,
-     *     'icon'   => '',
-     *     'remark' => '友情链接显示隐藏',
-     *     'param'  => ''
-     * )
+     * 显示隐藏
      */
     public function toggle()
     {
         $data      = $this->request->param();
-        $bannerModel = new BannerModel();
+        $recruitModel = new RecruitModel();
 
         if (isset($data['ids']) && !empty($data["display"])) {
             $ids = $this->request->param('ids/a');
-            $bannerModel->where(['id' => ['in', $ids]])->update(['status' => 1]);
+            $recruitModel->where(['id' => ['in', $ids]])->update(['status' => 1]);
             $this->success("更新成功！");
         }
 
         if (isset($data['ids']) && !empty($data["hide"])) {
             $ids = $this->request->param('ids/a');
-            $bannerModel->where(['id' => ['in', $ids]])->update(['status' => 0]);
+            $recruitModel->where(['id' => ['in', $ids]])->update(['status' => 0]);
             $this->success("更新成功！");
         }
 

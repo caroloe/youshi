@@ -1,0 +1,69 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('banner/index')}">所有banner</a></li>
+			<li class="active"><a href="{:url('banner/add')}">添加banner</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('banner/addPost')}">
+			<div class="form-group">
+				<label for="input-title" class="col-sm-2 control-label">标题<span class="form-required">*</span></label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-title" name="title">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-title" class="col-sm-2 control-label">设备<span class="form-required">*</span></label>
+				<div class="col-md-6 col-sm-10">
+					<select name="" class="form-control" required style="width: 49%;display: inline-block" id="type">
+						<!--<option value="0">请选择设备</option>-->
+						<option value="1">pc端</option>
+						<option value="2">wx端</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-img" class="col-sm-2 control-label">缩略图<span class="form-required">*</span></label>
+				<div class="col-md-6 col-sm-10">
+					<input type="hidden" class="form-control" id="input-img" name="cover_img">
+
+					<a href="javascript:uploadOneImage('图片上传','#input-img');"><img id="input-img-preview" src="__TMPL__/public/assets/images/default-thumbnail.png" style="width:150px;"/></a>
+					<!--<a href="javascript:uploadOneImage('图片上传','#input-img');">上传图片</a>-->
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-url" class="col-sm-2 control-label">链接</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-url" name="url">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-description" class="col-sm-2 control-label">简介</label>
+				<div class="col-md-6 col-sm-10">
+					<textarea rows="10" cols="115" name="desc" id="input-description" ></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="status" class="col-sm-2 control-label">状态<span class="form-required">*</span></label>
+				<div class="col-md-6 col-sm-10">
+					<label class="radio-inline">
+						<input type="radio" name="status" value="1" checked>显示
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="status" value="0">隐藏
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+					<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

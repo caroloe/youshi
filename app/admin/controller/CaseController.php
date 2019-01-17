@@ -9,18 +9,31 @@
 namespace app\admin\controller;
 
 
-use app\admin\model\BannerModel;
+use app\admin\model\CaseModel;
+use app\portal\model\PortalPostModel;
 use cmf\controller\AdminBaseController;
 
-class BannerController extends AdminBaseController
+
+/**
+ * Class CaseController
+ * @package app\admin\controller
+ * 精品案例
+ */
+class CaseController extends AdminBaseController
 {
     public function index()
     {
-        $bannerModel = new BannerModel();
-        $banners   = $bannerModel->where('type','in',[1,3])->order('list_order ASC')->paginate(10);
+        $keyword = $this->request->param('keyword');
 
-        $this->assign('banners', $banners);
-        $this->assign('page', $banners->render());
+        $where = [];
+        if(!empty($keyword)) $where['title'] = ['like',"%$keyword%"];
+
+        $caseModel = new CaseModel();
+        $cases   = $caseModel->where($where)->paginate(10);
+        $cases->appends($keyword);
+
+        $this->assign('cases', $cases);
+        $this->assign('page', $cases->render());
 
         return $this->fetch();
     }
@@ -35,17 +48,24 @@ class BannerController extends AdminBaseController
     public function addPost()
     {
         $data      = $this->request->param();
-        $data['create_time'] = time();
+        $data['post']['create_time'] = time();
+        $data = $data['post'];
+//var_dump($data);die;
 
-        if($data['title'] == '') return $this->error('banner名称必须');
-        if($data['cover_img'] == '') return $this->error('缩略图必须');
-        $bannerModel = new BannerModel();
-        $result    = $bannerModel->validate(true)->allowField(true)->save($data);
-        if ($result === false) {
-            $this->error($bannerModel->getError());
+        $result = $this->validate($data, 'Case');
+        if ($result !== true) {
+            $this->error($result);
         }
 
-        $this->success("添加成功！", url("banner/index"));
+        $caseModel = new CaseModel();
+        $result    = $caseModel->allowField(true)->save($data);
+        if ($result > 0) {
+            $this->success("添加成功！", url("case/index"));
+        }else{
+            $this->error('添加失败');
+        }
+
+
     }
 
     /**
@@ -64,9 +84,9 @@ class BannerController extends AdminBaseController
     public function edit()
     {
         $id        = $this->request->param('id', 0, 'intval');
-        $bannerModel = BannerModel::get($id);
-//        var_dump($bannerModel);die;
-        $this->assign('banner', $bannerModel);
+        $caseModel = CaseModel::get($id);
+//        var_dump($CaseModel);die;
+        $this->assign('case', $caseModel);
         return $this->fetch();
     }
 
@@ -86,13 +106,13 @@ class BannerController extends AdminBaseController
     public function editPost()
     {
         $data      = $this->request->param();
-        $bannerModel = new BannerModel();
-        $result    = $bannerModel->validate(true)->allowField(true)->isUpdate(true)->save($data);
+        $CaseModel = new CaseModel();
+        $result    = $CaseModel->validate(true)->allowField(true)->isUpdate(true)->save($data);
         if ($result === false) {
-            $this->error($bannerModel->getError());
+            $this->error($CaseModel->getError());
         }
 
-        $this->success("保存成功！", url("banner/index"));
+        $this->success("保存成功！", url("case/index"));
     }
 
     /**
@@ -111,7 +131,7 @@ class BannerController extends AdminBaseController
     public function delete()
     {
         $id = $this->request->param('id', 0, 'intval');
-        BannerModel::destroy($id);
+        CaseModel::destroy($id);
 
         $this->success("删除成功！", url("banner/index"));
     }
@@ -131,8 +151,8 @@ class BannerController extends AdminBaseController
      */
     public function listOrder()
     {
-        $bannerModel = new  BannerModel();
-        parent::listOrders($bannerModel);
+        $CaseModel = new  CaseModel();
+        parent::listOrders($CaseModel);
         $this->success("排序更新成功！");
     }
 
@@ -152,17 +172,17 @@ class BannerController extends AdminBaseController
     public function toggle()
     {
         $data      = $this->request->param();
-        $bannerModel = new BannerModel();
+        $CaseModel = new CaseModel();
 
         if (isset($data['ids']) && !empty($data["display"])) {
             $ids = $this->request->param('ids/a');
-            $bannerModel->where(['id' => ['in', $ids]])->update(['status' => 1]);
+            $CaseModel->where(['id' => ['in', $ids]])->update(['status' => 1]);
             $this->success("更新成功！");
         }
 
         if (isset($data['ids']) && !empty($data["hide"])) {
             $ids = $this->request->param('ids/a');
-            $bannerModel->where(['id' => ['in', $ids]])->update(['status' => 0]);
+            $CaseModel->where(['id' => ['in', $ids]])->update(['status' => 0]);
             $this->success("更新成功！");
         }
 

@@ -15,4 +15,6 @@ if (file_exists(CMF_ROOT . "data/conf/route.php")) {
     $runtimeRoutes = [];
 }
 
+\think\Route::any('admin/article/:id', 'admin/article/index',[], ['id'=>'\d+$']);
+
 return $runtimeRoutes;
