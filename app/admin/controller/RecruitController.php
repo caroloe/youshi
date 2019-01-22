@@ -21,11 +21,11 @@ class RecruitController extends AdminBaseController
         $param = $this->request->param();
 
         $recruitModel = new RecruitModel();
-        $recruits = $recruitModel->paginate(10);
+        $recruits = $recruitModel->order('list_order ASC')->paginate(10);
 
         $recruits->appends($param);
 
-        $this->assign('recruits',$recruits->item());
+        $this->assign('recruits',$recruits->items());
         $this->assign('page',$recruits->render());
 
         return $this->fetch();

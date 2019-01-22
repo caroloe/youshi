@@ -17,7 +17,7 @@ class BannerController extends AdminBaseController
     public function index()
     {
         $bannerModel = new BannerModel();
-        $banners   = $bannerModel->where('type','in',[1,3])->order('list_order ASC')->paginate(10);
+        $banners   = $bannerModel->order('list_order ASC')->paginate(10);
 
         $this->assign('banners', $banners);
         $this->assign('page', $banners->render());

@@ -3,14 +3,14 @@
 <body>
 <div class="wrap js-check-wrap">
     <ul class="nav nav-tabs">
-        <li class="active"><a href="{:url('recruit/index')}">所有banner</a></li>
+        <li class="active"><a href="{:url('recruit/index')}">所有职位</a></li>
         <li><a href="{:url('recruit/add')}">添加职位</a></li>
     </ul>
     <form method="post" class="js-ajax-form margin-top-20" action="{:url('recruit/listOrder')}">
         <div class="table-actions">
             <button class="btn btn-primary btn-sm js-ajax-submit" type="submit">{:lang('SORT')}</button>
             <button class="btn btn-primary btn-sm js-ajax-submit" type="submit"
-                    data-action="{:url('recruit/toggle',array('display'=>1))}" data-subcheck="true">{:lang('DISPLAY')}
+                    data-action="{:url('recruit/toggle',array('display'=>1 ))}" data-subcheck="true">{:lang('DISPLAY')}
             </button>
             <button class="btn btn-primary btn-sm js-ajax-submit" type="submit"
                     data-action="{:url('recruit/toggle',array('hide'=>1))}" data-subcheck="true">{:lang('HIDE')}
