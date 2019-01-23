@@ -10,8 +10,9 @@ namespace app\api\controller;
 
 use app\admin\model\RecruitModel;
 
-class RecruitController extends BaseController
+class RecruitController extends Base
 {
+    //获取招聘信息列表
     public function index(){
         $page = input('page',1,'intval');
         $len  = input('len',8,'intval');
@@ -21,6 +22,7 @@ class RecruitController extends BaseController
         return $this->output_success(13111,$recruits,'获取招聘信息成功');
     }
 
+    //获取招聘信息详情
     public function read(){
         $id = input('id',0,'intval');
 

@@ -73,6 +73,8 @@ class ArticleController extends AdminBaseController
                 ->field('a.*,b.list_order,b.id as post_category_id,b.status')
                 ->paginate(10);
 
+            $articles->appends($param);
+
             $this->assign('category_id', $id);
             $this->assign('category', $thisNode['name']);
             $this->assign('articles',$articles);
@@ -254,6 +256,7 @@ class ArticleController extends AdminBaseController
 
         $this->assign('article',$article);
         $this->assign('cid', $cid);
+
         return $this->fetch();
     }
 

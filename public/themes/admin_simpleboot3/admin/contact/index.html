@@ -1,0 +1,93 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('contact/index')}">联系我们</a></li>
+        <li><a href="{:url('contact/add')}">添加联系方式</a></li>
+    </ul>
+    <form method="post" class="js-ajax-form margin-top-20" action="{:url('contact/listOrder')}">
+        <div class="table-actions">
+        <!--<button class="btn btn-primary btn-sm js-ajax-submit" type="submit">{:lang('SORT')}</button>-->
+        <button class="btn btn-primary btn-sm js-ajax-submit" type="submit"
+                data-action="{:url('contact/toggle',array('display'=>1))}" data-subcheck="true">{:lang('DISPLAY')}
+        </button>
+        <button class="btn btn-primary btn-sm js-ajax-submit" type="submit"
+                data-action="{:url('contact/toggle',array('hide'=>1))}" data-subcheck="true">{:lang('HIDE')}
+        </button>
+    </div>
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <!--<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x"
+                                             data-checklist="js-check-x"></label></th>
+                <th width="50">{:lang('SORT')}</th>-->
+                <th width="50">ID</th>
+                <th width="135">名称</th>
+                <th width="200">电话</th>
+                <th>地址</th>
+                <th>邮箱</th>
+                <th>状态</th>
+                <th width="120">{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="contacts" item="vo">
+                <tr>
+
+                    <td>{$vo.id}</td>
+                    <td>{$vo.title}</td>
+                    <td>
+                        {$vo.mobile}
+                    </td>
+                    <td>
+                        {$vo.address}
+                    </td>
+                    <td>{$vo.fax}</td>
+                    <td>
+                        <if condition="$vo.status eq 1">
+                            显示
+                        <else/>
+                            隐藏
+                        </if>
+                    </td>
+
+                    <td>
+                        <a href="{:url('contact/edit',array('id'=>$vo['id']))}">{:lang('EDIT')}</a>
+                        <a href="{:url('contact/delete',array('id'=>$vo['id']))}" class="js-ajax-delete">
+                            {:lang('DELETE')}
+                        </a>
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+            <tfoot>
+            <tr>
+                <!--<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x"
+                                             data-checklist="js-check-x"></label></th>
+                <th width="50">{:lang('SORT')}</th>-->
+                <th width="50">ID</th>
+                <th width="135">名称</th>
+                <th width="200">电话</th>
+                <th>地址</th>
+                <th>邮箱</th>
+                <th>状态</th>
+                <th width="120">{:lang('ACTIONS')}</th>
+            </tr>
+            </tfoot>
+        </table>
+        <div class="table-actions">
+            <!--<button class="btn btn-primary btn-sm js-ajax-submit" type="submit">{:lang('SORT')}</button>-->
+            <button class="btn btn-primary btn-sm js-ajax-submit" type="submit"
+                    data-action="{:url('contact/toggle',array('display'=>1))}" data-subcheck="true">{:lang('DISPLAY')}
+            </button>
+            <button class="btn btn-primary btn-sm js-ajax-submit" type="submit"
+                    data-action="{:url('contact/toggle',array('hide'=>1))}" data-subcheck="true">{:lang('HIDE')}
+            </button>
+        </div>
+    </form>
+    <ul class="pagination">{$page|default=''}</ul>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

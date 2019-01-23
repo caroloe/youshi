@@ -10,7 +10,7 @@ namespace app\api\controller;
 
 use think\Controller;
 
-class BaseController extends Controller
+class Base extends Controller
 {
     public function _initialize()
     {

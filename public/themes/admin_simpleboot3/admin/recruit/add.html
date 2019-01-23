@@ -20,9 +20,15 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="input-experience" class="col-sm-2 control-label">工作经验></label>
+				<label for="input-experience" class="col-sm-2 control-label">工作经验</label>
 				<div class="col-md-6 col-sm-10">
 					<input type="text" class="form-control" id="input-experience" name="experience">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-condition" class="col-sm-2 control-label">工作地点</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-place" name="place">
 				</div>
 			</div>
 			<div class="form-group">
@@ -50,6 +56,12 @@
 				<label for="input-post" class="col-sm-2 control-label">简历投递</label>
 				<div class="col-md-6 col-sm-10">
 					<input type="text" class="form-control" id="input-post" placeholder="请输入邮箱" name="post">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-condition" class="col-sm-2 control-label">招聘人数</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-number" name="number">
 				</div>
 			</div>
 			<div class="form-group">
@@ -81,11 +93,13 @@
 	<script type="text/javascript">
         $(function () {
 
-            editorcontent = new baidu.editor.ui.Editor();
-            editorcontent.render('input-requirement');
-            editorcontent.render('input-duty');
+            editorcontent1 = new baidu.editor.ui.Editor();
+            editorcontent2 = new baidu.editor.ui.Editor();
+            editorcontent1.render('input-requirement');
+            editorcontent2.render('input-duty');
             try {
-                editorcontent.sync();
+                editorcontent1.sync();
+                editorcontent2.sync();
             } catch (err) {
             }
 

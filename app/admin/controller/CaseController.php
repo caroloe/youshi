@@ -57,6 +57,7 @@ class CaseController extends AdminBaseController
             $this->error($result);
         }
 
+        $data['content'] = htmlspecialchars_decode($data['content']);
         $caseModel = new CaseModel();
         $result    = $caseModel->allowField(true)->save($data);
         if ($result > 0) {
@@ -85,6 +86,7 @@ class CaseController extends AdminBaseController
     {
         $id        = $this->request->param('id', 0, 'intval');
         $caseModel = CaseModel::get($id);
+        $caseModel->content = htmlspecialchars_decode($caseModel->content);
 //        var_dump($CaseModel);die;
         $this->assign('case', $caseModel);
         return $this->fetch();
@@ -106,6 +108,8 @@ class CaseController extends AdminBaseController
     public function editPost()
     {
         $data      = $this->request->param();
+        $data['content'] = htmlspecialchars_decode($data['content']);
+
         $CaseModel = new CaseModel();
         $result    = $CaseModel->validate(true)->allowField(true)->isUpdate(true)->save($data);
         if ($result === false) {

@@ -1,0 +1,61 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('contact/index')}">所有联系方式</a></li>
+			<li class="active"><a href="{:url('contact/add')}">添加联系方式</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('contact/addPost')}">
+			<div class="form-group">
+				<label for="input-title" class="col-sm-2 control-label">标题<span class="form-required">*</span></label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-title" name="title">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-title" class="col-sm-2 control-label">电话</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-mobile" name="mobile">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-title" class="col-sm-2 control-label">邮箱</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-email" name="email">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-title" class="col-sm-2 control-label">地址</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-address" name="address">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-title" class="col-sm-2 control-label">坐标</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-coordinate" name="coordinate">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="status" class="col-sm-2 control-label">状态</label>
+				<div class="col-md-6 col-sm-10">
+					<label class="radio-inline">
+						<input type="radio" name="status" value="1" checked>显示
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="status" value="0">隐藏
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+					<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

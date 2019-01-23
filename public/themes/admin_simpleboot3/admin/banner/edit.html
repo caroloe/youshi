@@ -1,4 +1,4 @@
-description<include file="public@header"/>
+<include file="public@header"/>
 </head>
 <body>
 <div class="wrap">
@@ -68,10 +68,11 @@ description<include file="public@header"/>
             <div class="col-sm-offset-2 col-sm-10">
                 <input type="hidden" name="id" value="{$banner.id}">
                 <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
-                <a class="btn btn-default" href="{:url('banner/index'])}">{:lang('BACK')}</a>
+                <a class="btn btn-default" href="{:url('banner/index')}">{:lang('BACK')}</a>
             </div>
         </div>
     </form>
+
 </div>
 <script src="__STATIC__/js/admin.js"></script>
 </body>
